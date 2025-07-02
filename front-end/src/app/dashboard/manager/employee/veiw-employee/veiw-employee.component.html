@@ -1,0 +1,35 @@
+<div class="container">
+  <h2>All Employees</h2>
+
+  <div *ngIf="message" class="message">{{ message }}</div>
+
+  <table *ngIf="employees.length > 0">
+    <thead>
+      <tr>
+        <th>SSN</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Role</th>
+        <th>Salary</th>
+        <th>Date Of Joining</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let emp of paginatedHistory">
+        <td>{{ emp.userId }}</td>
+        <td>{{ emp.firstName }} {{emp.lastName}}</td>
+        <td>{{ emp.email }}</td>
+        <td>{{ emp.phoneNumber }}</td>
+        <td>{{ emp.position }}</td>
+        <td> ₹ {{ emp.salary }}</td>
+        <td>{{ emp.dateOfJoining }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination-controls" *ngIf="totalPages > 1">
+    <button (click)="currentPage = currentPage - 1" [disabled]="currentPage === 1">Prev</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="currentPage = currentPage + 1" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>

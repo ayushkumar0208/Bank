@@ -1,0 +1,72 @@
+<div class="delete-customer-main">
+<div class="card highlight">
+  <h3>🗑️ View Customer Transactions by SSN</h3>
+  <div class="form-grid">
+    <input #ssnToTrans (ngModel)="ssnToTrans" name="ssnToTrans" placeholder="Enter SSN to view Transactions" required />
+    <button (click)="viewTransactionsBySSN(ssnToTrans.value)" class="btn-danger">View</button>
+  </div>
+</div>
+<div *ngIf=viewDetails class="card highlight">
+  <h3>👥 Current Customers</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>SSN ID</th>
+        <th>Amount</th>
+        <th>Transaction Type</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transaction of paginatedHistory">
+        <td>{{ transaction.ssnId }}</td>
+        <td>₹ {{ transaction.amount  }}</td>
+        <td>{{ transaction.transactionType  }}</td>
+        <td>{{ transaction.transactionTime | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination-controls" *ngIf="totalPages > 1">
+    <button (click)="currentPage = currentPage - 1" [disabled]="currentPage === 1">Prev</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="currentPage = currentPage + 1" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>
+
+</div>
+<!-- <div class="transaction-container">
+  <div class="search-card">
+    <h2>🔍 View Customer Transactions</h2>
+    <input
+      (ngModel)="ssnId"
+      placeholder="Enter SSN ID"
+      class="input-box"
+      name="ssnSearch"
+    />
+    <button (click)="fetchTransactions()" class="search-btn">Search</button>
+  </div>
+
+  <div *ngIf="showTransactions" class="transactions-table">
+    <h3>📄 Transactions for SSN ID: {{ ssnId }}</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Transaction ID</th>
+          <th>Date</th>
+          <th>Type</th>
+          <th>Amount (₹)</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let txn of transactions">
+          <td>{{ txn.transactionId }}</td>
+          <td>{{ txn.date }}</td>
+          <td [ngClass]="{ credit: txn.type === 'Credit', debit: txn.type === 'Debit' }">{{ txn.type }}</td>
+          <td>{{ txn.amount }}</td>
+          <td>{{ txn.description }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div> -->

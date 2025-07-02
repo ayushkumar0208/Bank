@@ -1,0 +1,149 @@
+<!-- Cards Container -->
+<h1 class="heading-title">Loans</h1>
+<div class="cards-container">
+  <div class="card" *ngFor="let loan of loanTypes">
+    <div class="card-inner">
+      <div class="card-front">
+        <img [src]="loan.image" alt="{{ loan.name }}" />
+        <h3>{{ loan.name }}</h3>
+        <p>{{ loan.minAmount }} - {{ loan.maxAmount }}</p>
+        <strong>{{ loan.rate }}% p.a.</strong>
+        <p style="margin-top: 15px;">{{ loan.desc }}</p>
+      </div>
+      <div class="card-back">
+        <h4>Max Tenure: {{ loan.maxTenure }}</h4>
+        <p>{{ loan.benefits }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loan Form -->
+<div class="form-container" *ngIf="hasSession; else noSessionBlock">
+  <form (ngSubmit)="submitLoanForm(loanForm)" #loanForm="ngForm" class="loan-form">
+    <div style="width: 100%; display: flex; flex-direction: column;">
+      <h3 style="text-align: center; padding: 30px; font-size: 2rem; background-color: #800000; color: white;">
+        Apply Now to get Online Sanction.
+      </h3>
+      <div style="display: flex; flex-direction: column; align-items: center; padding: 20px;">
+
+        <!-- Full Name -->
+        <label>
+          Full Name:
+          <input type="text" name="fullName" [(ngModel)]="loanData.fullName" required minlength="3" pattern="^[A-Za-z]+( [A-Za-z]+)*$"
+            #fullName="ngModel" placeholder="Your full name" />
+          <div class="error" *ngIf="fullName.invalid && fullName.touched">
+            <small *ngIf="fullName.errors?.['required']">Name is required.</small>
+            <small *ngIf="fullName.errors?.['minlength']">Minimum 3 characters required.</small>
+            <small *ngIf="fullName.errors?.['pattern']">Numbers and Special Characters are not allowed in the name</small>
+          </div>
+        </label>
+
+        <!-- Email -->
+       <label>
+  Email:
+  <input
+    type="email"
+    name="email"
+    [(ngModel)]="loanData.email"
+    required
+    pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+    #email="ngModel"
+    placeholder="Your email"
+  />
+  <div class="error" *ngIf="email.invalid && email.touched">
+    <small *ngIf="email.errors?.['required']">Email is required.</small>
+    <small *ngIf="email.errors?.['pattern']">Email is not valid!</small>
+  </div>
+</label>
+
+        <!-- Mobile -->
+        <label>
+          Phone:
+          <input
+            type="tel"
+            name="mobile"
+            [(ngModel)]="loanData.mobile"
+            required
+            pattern="^[6-9][0-9]{9}$"
+            #mobile="ngModel"
+            placeholder="10-digit mobile number"
+          />
+          <div class="error" *ngIf="mobile.invalid && mobile.touched">
+            <small *ngIf="mobile.errors?.['required']">Phone is required.</small>
+            <small *ngIf="mobile.errors?.['pattern']">Enter valid 10-digit Indian number.</small>
+          </div>
+        </label>
+
+        <!-- Loan Type -->
+        <label>
+          Loan Type:
+          <select name="loanType" [(ngModel)]="loanData.loanType" required #loanType="ngModel">
+            <option value="" disabled selected>Select</option>
+            <option>Home Loan</option>
+            <option>Car Loan</option>
+            <option>Personal Loan</option>
+          </select>
+          <div class="error" *ngIf="loanType.invalid && loanType.touched">
+            <small *ngIf="loanType.errors?.['required']">Loan type is required.</small>
+          </div>
+        </label>
+
+        <!-- Amount -->
+        <label>
+          Amount (in ₹):
+          <input
+            type="number"
+            name="amount"
+            [(ngModel)]="loanData.amount"
+            required
+            min="10000"
+            #amount="ngModel"
+            placeholder="E.g. 250000"
+          />
+          <div class="error" *ngIf="amount.invalid && amount.touched">
+            <small *ngIf="amount.errors?.['required']">Amount is required.</small>
+            <small *ngIf="amount.errors?.['min']">Minimum ₹10,000 required.</small>
+          </div>
+        </label>
+
+        <!-- Tenure -->
+        <label>
+          Tenure (Years):
+          <input
+            type="number"
+            name="tenure"
+            [(ngModel)]="loanData.tenure"
+            required
+            min="1"
+            max="30"
+            #tenure="ngModel"
+            placeholder="E.g. 5"
+          />
+          <div class="error" *ngIf="tenure.invalid && tenure.touched">
+            <small *ngIf="tenure.errors?.['required']">Tenure is required.</small>
+            <small *ngIf="tenure.errors?.['min']">Minimum 1 year required.</small>
+            <small *ngIf="tenure.errors?.['max']">Maximum 30 years allowed.</small>
+          </div>
+        </label>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit Application</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<ng-template #noSessionBlock>
+  <div class="loan-info-block">
+    <h2>Ready to unlock your financial goals?</h2>
+    <p>Our loan products offer flexible repayment, competitive rates, and fast processing.</p>
+    <ul>
+      <li>🏠 <strong>Home Loans:</strong> Build your dream home</li>
+      <li>🚗 <strong>Car Loans:</strong> Drive your dream car</li>
+      <li>💼 <strong>Personal Loans:</strong> Quick funds for any purpose</li>
+    </ul>
+    <p><strong>Please <a routerLink="/login">Login</a> first to apply for a loan.</strong></p>
+    <p class="loan-info-cta">Your future starts here — Apply today!</p>
+  </div>
+</ng-template>

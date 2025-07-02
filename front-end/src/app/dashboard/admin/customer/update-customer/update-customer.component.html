@@ -1,0 +1,132 @@
+<div class="update-customer-main">
+  <form #updateForm="ngForm" (ngSubmit)="onUpdateSubmit()" class="form-container">
+
+    <div class="card highlight">
+      <h3>Update Customer by SSN</h3>
+      <div class="form-grid">
+        <input
+          type="text"
+          name="ssnSearch"
+          [(ngModel)]="ssnToSearch"
+          placeholder="Enter SSN"
+          required
+          pattern="^C[A-Za-z0-9]{6}$"
+        />
+        <button type="button" (click)="searchCustomerBySSN(ssnToSearch)" class="btn-primary">
+          Search
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="viewDetails" class="card highlight">
+      <h3>✏️ Update Customer Details</h3>
+      <div class="update-fields">
+
+        <!-- SSN ID -->
+        <div class="form-grid">
+          <label>SSN ID</label>
+          <input name="ssnId" [(ngModel)]="customer.ssnId" required pattern="^C[A-Za-z0-9]{6}$" readonly />
+        </div>
+
+        <!-- First Name -->
+        <div class="form-grid">
+          <label>First Name</label>
+          <input name="firstName" [(ngModel)]="customer.firstName" required pattern="^[A-Za-z]+$" />
+        </div>
+
+        <!-- Last Name -->
+        <div class="form-grid">
+          <label>Last Name</label>
+          <input name="lastName" [(ngModel)]="customer.lastName" required pattern="^[A-Za-z]+$" />
+        </div>
+
+        <!-- Email -->
+        <div class="form-grid">
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            [(ngModel)]="customer.email"
+            required
+            pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9]+\.[A-Za-z]{2,}$"
+          />
+        </div>
+
+        <!-- Contact Number -->
+        <div class="form-grid">
+          <label>Contact Number</label>
+          <input name="contactNumber" [(ngModel)]="customer.contactNumber" required pattern="^[6-9][0-9]{9}$" />
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="form-grid">
+          <label>Date of Birth</label>
+          <input type="date" name="dob" [(ngModel)]="customer.dob" required />
+        </div>
+
+        <!-- Gender -->
+        <div class="form-grid">
+          <label>Gender</label>
+          <select name="gender" [(ngModel)]="customer.gender" required>
+            <option value="" disabled>Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+
+        <!-- Marital Status -->
+        <div class="form-grid">
+          <label>Marital Status</label>
+          <select name="maritalStatus" [(ngModel)]="customer.maritalStatus" required>
+            <option value="" disabled>Select Status</option>
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+            <option value="divorced">Divorced</option>
+          </select>
+        </div>
+
+        <!-- Address -->
+        <div class="form-grid">
+          <label>Address</label>
+          <input name="address" [(ngModel)]="customer.address" required />
+        </div>
+
+        <!-- PAN Card Number -->
+        <div class="form-grid">
+          <label>PAN Card Number</label>
+          <input
+            name="panCardNumber"
+            [(ngModel)]="customer.panCardNumber"
+            required
+            pattern="^[A-Z]{5}[0-9]{4}[A-Z]$"
+          />
+        </div>
+
+        <!-- Aadhar Card Number -->
+        <div class="form-grid">
+          <label>Aadhar Card Number</label>
+          <input
+            name="aadharCardNumber"
+            [(ngModel)]="customer.aadharCardNumber"
+            required
+            pattern="^[0-9]{12}$"
+          />
+        </div>
+
+        <!-- Account Balance (Read-only) -->
+        <div class="form-grid">
+          <label>Account Balance</label>
+          <input name="accountBalance" [(ngModel)]="customer.accountBalance" readonly />
+        </div>
+
+        <!-- Submit Button -->
+        <button class="btn-primary" type="submit">
+          Update
+        </button>
+
+      </div>
+    </div>
+    <p class="message">{{ message }}</p>
+  </form>
+  
+</div>

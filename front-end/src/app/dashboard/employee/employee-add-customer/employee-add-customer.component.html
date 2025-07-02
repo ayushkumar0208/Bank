@@ -1,0 +1,51 @@
+<div class="delete-customer-main">
+  <div class="card highlight">
+  <h3>Customers Account Access</h3>
+</div>
+<div class="card highlight">
+  <h3>👥 Current Customers</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Pan Card</th>
+        <th>Balance</th>
+        <th>Gender</th>
+        <th>Marital Status</th>
+        <th>Aadhar Card</th>
+        <th>Access Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of paginatedHistory">
+        <td>{{ customer.ssnId }}</td>
+        <td>{{ customer.firstName }} {{customer.lastName}}</td>
+        <td>{{ customer.panCardNumber }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.gender }}</td>
+        <td>{{ customer.maritalStatus }}</td>
+        <td>{{ customer.aadharCardNumber }}</td>
+        
+        <td>
+          <div *ngIf = "customer.customerVerified" style="width: 100%; display: flex; align-items: center; justify-self: space-between;">
+            <p>✅    |</p>
+            <button class="btn-primary" (click)="revokeCustomerRequest(customer.ssnId)">Revoke</button>
+          </div>
+          <div *ngIf = "!customer.customerVerified" style="width: 100%; display: flex; align-items: center; justify-self: space-between;">
+            <p>❌    |</p>
+            <button class="btn-primary" (click)="approveCustomerRequest(customer.ssnId)">Grant</button>
+          </div>
+      </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination-controls" *ngIf="totalPages > 1">
+    <button (click)="currentPage = currentPage - 1" [disabled]="currentPage === 1">Prev</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="currentPage = currentPage + 1" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+
+</div>
+
+</div>

@@ -1,0 +1,44 @@
+<div *ngIf="hasSession; else noSessionBlock" class="admin-dashboard">
+  <button class="toggle-btn" (click)="showNav = !showNav">
+    {{ showNav ? '<<' : '>>' }}
+  </button>
+
+  <div class="navbar" *ngIf="showNav">
+    <h2>Manager Dashboard</h2>
+
+    <div class="section">
+      <h3>👨‍💼 Employee Management</h3>
+      <button (click)="navigateTo('add-employee')">Add Employee</button>
+      <button (click)="navigateTo('update-employee')">Update Employee</button>
+      <button (click)="navigateTo('delete-employee')">Delete Employee</button>
+      <button (click)="navigateTo('view-employee')">View All Employees</button>
+    </div>
+
+    <div class="section">
+      <h3>👥 Customer Management</h3>
+      <button (click)="navigateTo('add-customer')">Add Customer</button>
+      <button (click)="navigateTo('update-customer')">Update Customer</button>
+      <button (click)="navigateTo('delete-customer')">Delete Customer</button>
+      <button (click)="navigateTo('view-customer')">View All Customers</button>
+    </div>
+
+    <div class="section">
+      <h3>💰 Transactions</h3>
+      <button (click)="navigateTo('transaction')">Perform Transaction</button>
+    </div>
+  </div>
+
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<ng-template #noSessionBlock>
+  <div class="no-session-container">
+    <div class="no-session-card">
+      <h1>🔒 Access Denied</h1>
+      <p>You need to log in first to access this page.</p>
+      <button routerLink="/login">Go to Login</button>
+    </div>
+  </div>
+</ng-template>

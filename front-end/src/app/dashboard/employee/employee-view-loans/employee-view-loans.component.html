@@ -1,0 +1,36 @@
+<div class="delete-customer-main">
+<div class="card highlight">
+  <h3>👥 Current Loan Requests</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>SSN ID</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Amount</th>
+        <th>Tenure (in Months)</th>
+        <th>Loan Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let loan of paginatedHistory">
+        <td>{{ loan.ssnid }}</td>
+        <td>{{ loan.fullName }} </td>
+        <td>{{ loan.email }}</td>
+        <td>{{ loan.mobile }}</td>
+        <td>₹ {{ loan.amount }}</td>
+        <td>{{ loan.tenure }}</td>
+        <td>{{loan.loanType}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination-controls" *ngIf="totalPages > 1">
+    <button (click)="currentPage = currentPage - 1" [disabled]="currentPage === 1">Prev</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="currentPage = currentPage + 1" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>
+
+
+</div>

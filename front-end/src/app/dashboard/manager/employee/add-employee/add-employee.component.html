@@ -1,0 +1,145 @@
+<div class="form-container">
+  <h2>Add New Employee</h2>
+
+  <form (ngSubmit)="onSubmit()" #empForm="ngForm">
+
+    <!-- First Name -->
+    <label for="firstName">First Name</label>
+    <input
+      type="text"
+      id="firstName"
+      name="firstName"
+      [(ngModel)]="employee.firstName"
+      placeholder="First Name"
+      required
+      pattern="^[A-Za-z]{2,}$"
+      #firstName="ngModel"
+    />
+    <div class="error" *ngIf="firstName.invalid && firstName.touched">
+      <small *ngIf="firstName.errors?.['required']">First name is required.</small>
+      <small *ngIf="firstName.errors?.['pattern']">No special characters or numbers allowed.</small>
+    </div>
+
+    <!-- Last Name -->
+    <label for="lastName">Last Name</label>
+    <input
+      type="text"
+      id="lastName"
+      name="lastName"
+      [(ngModel)]="employee.lastName"
+      placeholder="Last Name"
+      required
+      pattern="^[A-Za-z]{2,}$"
+      #lastName="ngModel"
+    />
+    <div class="error" *ngIf="lastName.invalid && lastName.touched">
+      <small *ngIf="lastName.errors?.['required']">Last name is required.</small>
+      <small *ngIf="lastName.errors?.['pattern']">No special characters or numbers allowed.</small>
+    </div>
+
+    <!-- Email -->
+    <label for="email">Email</label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      [(ngModel)]="employee.email"
+      placeholder="Email"
+      required
+      pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|in|org|net)$"
+      #email="ngModel"
+    />
+    <div class="error" *ngIf="email.invalid && email.touched">
+      <small *ngIf="email.errors?.['required']">Email is required.</small>
+      <small *ngIf="email.errors?.['pattern']">Invalid email format (e.g., user@gmail.com).</small>
+    </div>
+
+
+
+<!-- Position -->
+<div class="form-group">
+  <label>Position</label>
+  <select
+    name="position"
+    [(ngModel)]="employee.position"
+    required
+    #position="ngModel"
+    id="position"
+  >
+    <option value="" disabled selected>Select Position</option>
+    <option value="Bank Teller">HR</option>
+    <option value="Customer Service Executive">Customer Service Executive</option>
+    <option value="Relationship Manager">Relationship Manager</option>
+    <option value="Branch Manager">Branch Manager</option>
+    <option value="Assistant Branch Manager">Assistant Branch Manager</option>
+    <option value="Loan Officer">Loan Officer</option>
+    <option value="Credit Analyst">Credit Analyst</option>
+    <option value="Operations Executive">Operations Executive</option>
+    <option value="Accountant">Accountant</option>
+    <option value="Auditor">Auditor</option>
+    <option value="IT Officer">IT Officer</option>
+    <option value="Cybersecurity Analyst">Cybersecurity Analyst</option>
+    <option value="Clerk">Clerk</option>
+    <option value="Probationary Officer">Probationary Officer</option>
+    <option value="Cashier">Cashier</option>
+    <option value="Marketing Executive">Marketing Executive</option>
+    <option value="Financial Advisor">Financial Advisor</option>
+    <option value="Intern">Intern</option>
+  </select>
+
+  <div class="error" *ngIf="position.invalid && position.touched">
+    <small>Position is required.</small>
+  </div>
+</div>
+
+    <!-- Salary -->
+    <label for="salary">Salary</label>
+    <input
+      type="number"
+      id="salary"
+      name="salary"
+      [(ngModel)]="employee.salary"
+      placeholder="Salary"
+      required
+      min="0"
+      step="0.01"
+      #salary="ngModel"
+    />
+    <div class="error" *ngIf="salary.invalid && salary.touched">
+      <small *ngIf="salary.errors?.['required']">Salary is required.</small>
+      <small *ngIf="salary.errors?.['min']">Salary cannot be negative.</small>
+    </div>
+
+    <!-- Date of Joining -->
+    <label for="dateOfJoining">Date of Joining</label>
+    <input
+      type="date"
+      id="dateOfJoining"
+      name="dateOfJoining"
+      [(ngModel)]="employee.dateOfJoining"
+      required
+    />
+
+    <!-- Phone Number -->
+    <label for="phoneNumber">Phone Number</label>
+    <input
+      type="text"
+      id="phoneNumber"
+      name="phoneNumber"
+      [(ngModel)]="employee.phoneNumber"
+      placeholder="10-digit Indian number"
+      required
+      pattern="^[6-9][0-9]{9}$"
+      #phoneNumber="ngModel"
+    />
+    <div class="error" *ngIf="phoneNumber.invalid && phoneNumber.touched">
+      <small *ngIf="phoneNumber.errors?.['required']">Phone number is required.</small>
+      <small *ngIf="phoneNumber.errors?.['pattern']">Enter valid 10-digit Indian mobile number.</small>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" [disabled]="!empForm.form.valid">Add Employee</button>
+  </form>
+
+  <p class="message" *ngIf="message">{{ message }}</p>
+</div>

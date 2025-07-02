@@ -1,0 +1,83 @@
+.contact-container {
+/* min-height: 90vh;; */
+  max-width: 600px;
+  margin: 50px auto;
+  background: #f7f7f7;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.contact-container h2 {
+  text-align: center;
+  color: #800000; 
+  margin-bottom: 1.5rem;
+}
+
+.contact-form label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+.contact-form textarea {
+  min-height: 100px;
+}
+
+.contact-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #800000;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 15px;
+  font-size: 1.1rem;
+}
+
+.contact-form button:hover {
+  background-color: #800000;
+}
+
+.error {
+    color: #b00020;
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
+
+/* Responsive */
+
+@media (max-width: 480px) {
+  .contact-container {
+    padding: 1rem;
+  }
+
+  .contact-form button {
+    font-size: 1rem;
+  }
+}
+
+.heading-title{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 3.5em;
+    padding: 10px 0 0 30px;
+    background: linear-gradient(135deg, #800000, #ffffff);
+    color: white;
+}

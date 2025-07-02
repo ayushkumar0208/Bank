@@ -1,0 +1,78 @@
+<div *ngIf="!hasSession; else sessionExistBlock" style="min-height: 90vh;">
+<div class="heading-title">
+  <h1 style="font-size: 1em;">Login</h1>
+  <div>
+    <a href="/register"><button type="button" class="cta-btn" routerLink="/register">Register as Customer</button></a>
+  </div>
+  
+</div>
+<div class="login-container">
+  <div class="login-card">
+    <h2>Login</h2>
+    <div class="role-toggle">
+      <button
+        class="toggle-btn"
+        [class.active]="role === 'employee'"
+        (click)="switchRole('employee')"
+      >
+        Employee
+      </button>
+      <button
+        class="toggle-btn"
+        [class.active]="role === 'admin'"
+        (click)="switchRole('admin')"
+      >
+        Admin
+      </button>
+      <button
+        class="toggle-btn"
+        [class.active]="role === 'customer'"
+        (click)="switchRole('customer')"
+      >
+        Customer
+      </button>
+      <button
+        class="toggle-btn"
+        [class.active]="role === 'manager'"
+        (click)="switchRole('manager')"
+      >
+        Manager
+      </button>
+    </div>
+    <form (ngSubmit)="login(username, password)">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+        
+          type="text"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+        
+          type="password"
+          id="password"
+        [(ngModel)]="password"
+          name="password"
+          required
+        />
+      </div>
+      <div>
+        
+      </div>
+      <button type="submit" class="login-btn">Login</button>
+    </form>
+    <p class="error-message" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </div>
+</div>
+</div>
+
+
+<ng-template #sessionExistBlock>
+  <app-session-exist></app-session-exist>
+</ng-template>

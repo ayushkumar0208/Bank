@@ -1,0 +1,43 @@
+<div class="container">
+  <h2>All Customers</h2>
+
+  <div *ngIf="message" class="message">{{ message }}</div>
+
+  <table *ngIf="customers.length > 0">
+    <thead>
+      <tr>
+        <th>SSN</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th>Balance</th>
+        <th>PAN</th>
+        <th>Aadhar</th>
+        <th>Address</th>
+        <th>Gender</th>
+        <th>Marital Status</th>
+        <th>Verified</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cust of paginatedHistory">
+        <td>{{ cust.ssnId }}</td>
+        <td>{{ cust.firstName }} {{cust.lastName}}</td>
+        <td>{{ cust.email }}</td>
+        <td>{{ cust.contactNumber }}</td>
+        <td>₹ {{ cust.accountBalance }}</td>
+        <td>{{cust.panCardNumber}}</td>
+        <td>{{cust.aadharCardNumber}}</td>
+        <td>{{cust.address}}</td>
+        <td>{{cust.gender}}</td>
+        <td>{{cust.maritalStatus}}</td>
+        <td>{{cust.customerVerified ? 'Yes' : 'No'}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination-controls" *ngIf="totalPages > 1">
+    <button (click)="currentPage = currentPage - 1" [disabled]="currentPage === 1">Prev</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="currentPage = currentPage + 1" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>

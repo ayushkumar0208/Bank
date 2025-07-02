@@ -1,0 +1,125 @@
+<div class="form-container">
+  <h2>Add Customer</h2>
+
+  <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+
+    <!-- First Name -->
+    <div class="form-group">
+      <label for="firstName">First Name</label>
+      <input id="firstName" formControlName="firstName" placeholder="First Name" />
+      <div class="error-msg" *ngIf="f['firstName'].touched && f['firstName'].invalid">
+        <small *ngIf="f['firstName'].errors?.['required']">First name is required.</small>
+        <small *ngIf="f['firstName'].errors?.['pattern']">Only alphabets allowed (no spaces/symbols).</small>
+      </div>
+    </div>
+
+    <!-- Last Name -->
+    <div class="form-group">
+      <label for="lastName">Last Name</label>
+      <input id="lastName" formControlName="lastName" placeholder="Last Name" />
+      <div class="error-msg" *ngIf="f['lastName'].touched && f['lastName'].invalid">
+        <small *ngIf="f['lastName'].errors?.['required']">Last name is required.</small>
+        <small *ngIf="f['lastName'].errors?.['pattern']">Only alphabets allowed (no spaces/symbols).</small>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" formControlName="email" placeholder="Email" />
+      <div class="error-msg" *ngIf="f['email'].touched && f['email'].invalid">
+        <small *ngIf="f['email'].errors?.['required']">Email is required.</small>
+        <small *ngIf="f['email'].errors?.['pattern']">Must be a valid email like gmail.com, yahoo.com, etc.</small>
+      </div>
+    </div>
+
+    <!-- Contact Number -->
+    <div class="form-group">
+      <label for="contactNumber">Contact Number</label>
+      <input id="contactNumber" formControlName="contactNumber" placeholder="Contact Number" />
+      <div class="error-msg" *ngIf="f['contactNumber'].touched && f['contactNumber'].invalid">
+        <small *ngIf="f['contactNumber'].errors?.['required']">Phone number is required.</small>
+        <small *ngIf="f['contactNumber'].errors?.['pattern']">Must start with 6-9 and be 10 digits.</small>
+      </div>
+    </div>
+
+    <!-- DOB -->
+    <div class="form-group">
+      <label for="dob">Date of Birth</label>
+      <input id="dob" type="date" formControlName="dob" placeholder="Date of Birth" />
+      <div class="error-msg" *ngIf="f['dob'].touched && (f['dob'].invalid || customerForm.errors?.['minAge'])">
+        <small *ngIf="f['dob'].errors?.['required']">DOB is required.</small>
+        <small *ngIf="customerForm.errors?.['minAge']">Minimum age should be 18 years.</small>
+      </div>
+    </div>
+
+    <!-- Gender -->
+    <div class="form-group">
+      <label for="gender">Gender</label>
+      <select id="gender" formControlName="gender">
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+      <div class="error-msg" *ngIf="f['gender'].touched && f['gender'].invalid">
+        <small *ngIf="f['gender'].errors?.['required']">Gender is required.</small>
+      </div>
+    </div>
+
+    <!-- Marital Status -->
+    <div class="form-group">
+      <label for="maritalStatus">Marital Status</label>
+      <select id="maritalStatus" formControlName="maritalStatus">
+        <option value="">Select Marital Status</option>
+        <option value="Single">Single</option>
+        <option value="Married">Married</option>
+        <option value="Divorced">Divorced</option>
+      </select>
+      <div class="error-msg" *ngIf="f['maritalStatus'].touched && f['maritalStatus'].invalid">
+        <small *ngIf="f['maritalStatus'].errors?.['required']">Marital status is required.</small>
+      </div>
+    </div>
+
+    <!-- Address -->
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input id="address" formControlName="address" placeholder="Address" />
+      <div class="error-msg" *ngIf="f['address'].touched && f['address'].invalid">
+        <small *ngIf="f['address'].errors?.['required']">Address is required.</small>
+      </div>
+    </div>
+
+    <!-- PAN -->
+    <div class="form-group">
+      <label for="panCardNumber">PAN Card Number</label>
+      <input id="panCardNumber" formControlName="panCardNumber" placeholder="ABCDE1234F" />
+      <div class="error-msg" *ngIf="f['panCardNumber'].touched && f['panCardNumber'].invalid">
+        <small *ngIf="f['panCardNumber'].errors?.['required']">PAN is required.</small>
+        <small *ngIf="f['panCardNumber'].errors?.['pattern']">Format: ABCDE1234F.</small>
+      </div>
+    </div>
+
+    <!-- Aadhar -->
+    <div class="form-group">
+      <label for="aadharCardNumber">Aadhar Card Number</label>
+      <input id="aadharCardNumber" formControlName="aadharCardNumber" placeholder="Aadhar Number" />
+      <div class="error-msg" *ngIf="f['aadharCardNumber'].touched && f['aadharCardNumber'].invalid">
+        <small *ngIf="f['aadharCardNumber'].errors?.['required']">Aadhar is required.</small>
+        <small *ngIf="f['aadharCardNumber'].errors?.['pattern']">Must be 12-digit number.</small>
+      </div>
+    </div>
+
+    <!-- Verified Checkbox -->
+    <div class="form-group">
+      <label style="display: flex; align-items: center; justify-items: left;">
+        <input style="width: fit-content; margin-right: 5px;" type="checkbox" formControlName="customerVerified" />
+        <div>Customer Verified</div>
+      </label>
+    </div>
+
+    <button type="submit">Add Customer</button>
+  </form>
+
+  <p class="message">{{ message }}</p>
+</div>

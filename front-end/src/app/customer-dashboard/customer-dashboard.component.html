@@ -1,0 +1,205 @@
+<div *ngIf="hasSession; else noSessionBlock" style="min-height: 90vh;">
+  <div *ngIf="customAlert" class="alert-box" [ngClass]="customAlert.type">
+  {{ customAlert.message }}
+</div>
+<nav class="dash-nav">
+  <button (click)="show('profile')" [class.active]="active==='profile'">My Profile</button>
+  <button (click)="show('transactions')" [class.active]="active==='transactions'">Transactions</button>
+  <button (click)="show('history')" [class.active]="active==='history'">History</button>
+
+  <a routerLink="/loans" class="loan-btn">Apply Loan</a>
+
+  <!-- 👇--- balance badge -->
+  <span class="bal" *ngIf="customer as c">
+    ₹ {{ c.accountBalance | number:'1.0-0' }}
+  </span>
+</nav>
+
+<!-- ----------  Profile  ---------- -->
+<section *ngIf="active==='profile' && customer" class="profile-section">
+  <div>
+     <img src="../../../../assets/Images/Bank/profile.png" alt="Profile" class="profile-img" />
+  <h2>{{ customer.firstName }} {{ customer.lastName }}</h2>
+
+  <table class="profile-table">
+    <tr>
+      <th>SSN ID</th>
+      <td>{{ customer.ssnId }}</td>
+    </tr>
+    <tr>
+      <th>Email</th>
+      <td>{{ customer.email }}</td>
+    </tr>
+    <tr>
+      <th>Contact Number</th>
+      <td>{{ customer.contactNumber }}</td>
+    </tr>
+    <tr>
+      <th>Date of Birth</th>
+      <td>{{ customer.dob | date }}</td>
+    </tr>
+    <tr>
+      <th>Gender</th>
+      <td>{{ customer.gender }}</td>
+    </tr>
+    <tr>
+      <th>Marital Status</th>
+      <td>{{ customer.maritalStatus }}</td>
+    </tr>
+    <tr>
+      <th>Address</th>
+      <td>{{ customer.address }}</td>
+    </tr>
+    <tr>
+      <th>PAN Card No.</th>
+      <td>{{ customer.panCardNumber }}</td>
+    </tr>
+    <tr>
+      <th>Aadhar Card No.</th>
+      <td>{{ customer.aadharCardNumber }}</td>
+    </tr>
+    <tr>
+      <th>IFSC Code</th>
+      <td>{{ customer.ifscCode }}</td>
+    </tr>
+    <tr>
+      <th>Current Balance</th>
+      <td>₹ {{ customer.accountBalance | number:'1.0-0' }}</td>
+    </tr>
+  </table>
+  </div>
+ 
+
+ <div class="info-section">
+  <h4>Update Password</h4>
+  <form #passwordForm="ngForm" (ngSubmit)="updatePassword(passwordForm)">
+    <label for="password">New Password:</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      ngModel
+      required
+      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&amp;#])[A-Za-z\d@$!%*?&amp;#]{9,30}$"
+      minlength="9"
+      maxlength="30"
+      placeholder="Enter new password"
+      style="padding: 5px; width: 100%; border-radius: 6px; border: 1px solid #800000; margin-top: 5px; margin-bottom: 10px;"
+      title="Password must be 9-30 characters long, including at least one uppercase letter, one lowercase letter, one number, and one special character."
+    />
+    <div *ngIf="passwordForm.submitted && passwordForm.controls['password']?.invalid" style="color: red;">
+      <small *ngIf="passwordForm.controls['password']?.errors?.['required']">Password is required.</small>
+      <small *ngIf="passwordForm.controls['password']?.errors?.['minlength']">Minimum 9 characters required.</small>
+      <small *ngIf="passwordForm.controls['password']?.errors?.['maxlength']">Maximum 30 characters allowed.</small>
+      <small *ngIf="passwordForm.controls['password']?.errors?.['pattern']">
+        Password must include at least one uppercase letter, one lowercase letter, one digit, and one special character.
+      </small>
+    </div>
+
+    <label for="confirmPassword" style="margin-top: 10px;">Confirm Password:</label>
+    <input
+      type="password"
+      id="confirmPassword"
+      name="confirmPassword"
+      ngModel
+      required
+      placeholder="Re-enter new password"
+      style="padding: 5px; width: 100%; border-radius: 6px; border: 1px solid #800000; margin-top: 5px;"
+    />
+    <div *ngIf="passwordForm.submitted && passwordForm.controls['confirmPassword']?.invalid" style="color: red;">
+      <small *ngIf="passwordForm.controls['confirmPassword']?.errors?.['required']">Confirm password is required.</small>
+      <small *ngIf="passwordForm.value.confirmPassword !== passwordForm.value.password">
+        Passwords must match.
+      </small>
+    </div>
+
+    <button type="submit" class="edit-btn">🔒 Update Password</button>
+  </form>
+</div>
+</section>
+
+<!-- ----------  Transactions  ---------- -->
+<section *ngIf="active==='transactions'" class="trans-section">
+
+  <!-- cards -->
+  <div class="trans-card" (click)="openTx('withdraw')">
+    <img src="../../../../../assets/Images/Payments/1.png">
+    <h3>Withdraw</h3>
+  </div>
+
+  <div class="trans-card" (click)="openTx('deposit')">
+    <img src="../../../../../assets/Images/Payments/2.png">
+    <h3>Deposit</h3>
+  </div>
+
+  <div class="trans-card" (click)="openTx('transfer')">
+    <img src="../../../../../assets/Images/Payments/3.png">
+    <h3>Transfer</h3>
+  </div>
+
+  <!-- transaction form -->
+  <form *ngIf="txMode" #txForm="ngForm" (ngSubmit)="submitTx(txForm)" class="tx-form">
+
+    <h4 class="title">
+      {{ txMode | titlecase }}
+    </h4>
+    <img src="assets/Images/Payments/imps.png" alt=""/>
+    <label>
+      Amount (₹):
+      <input type="number" name="amount" [(ngModel)]="txModel.amount" required min="1" #amt="ngModel"
+        placeholder="Enter amount">
+      <div class="err" *ngIf="amt.invalid && amt.touched">
+        <small *ngIf="amt.errors?.['required']">Amount is required.</small>
+        <small *ngIf="amt.errors?.['min']">Enter a positive value.</small>
+      </div>
+    </label>
+
+    <!-- only for transfer -->
+    <label *ngIf="txMode==='transfer'">
+      To Account #:
+      <input type="text" name="toAcc" [(ngModel)]="txModel.toAcc" required minlength="6" #acc="ngModel"
+        placeholder="Recipient account number">
+      <div class="err" *ngIf="acc.invalid && acc.touched">
+        <small *ngIf="acc.errors?.['required']">Account number required.</small>
+        <small *ngIf="acc.errors?.['minlength']">Min 6 digits.</small>
+      </div>
+    </label>
+
+    <div class="btn-row">
+      <button type="submit" [disabled]="txForm.invalid">Confirm</button>
+      <button type="button" class="cancel" (click)="txMode=null">Cancel</button>
+    </div>
+  </form>
+</section>
+
+<!-- ----------  History  ---------- -->
+<section *ngIf="active==='history'" class="history-section">
+  <h3>Transaction History</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tx of paginatedHistory">
+        <td>{{ tx.transactionType }}</td>
+        <td>₹ {{ tx.amount | number:'1.0-0' }}</td>
+        <td>{{ tx.transactionTime | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination-controls" *ngIf="totalPages > 1">
+    <button (click)="currentPage = currentPage - 1" [disabled]="currentPage === 1">Prev</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="currentPage = currentPage + 1" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</section>
+</div>
+
+<ng-template #noSessionBlock>
+  <app-no-session></app-no-session>
+</ng-template>

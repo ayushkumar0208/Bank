@@ -1,0 +1,71 @@
+<div class="profile-container">
+  <div class="profile-card">
+    <img src="../../../../assets/Images/Bank/profile.png" alt="Profile" class="profile-img" />
+
+    <h2>{{ employee.firstName }} {{employee.lastName}}</h2>
+    <p class="designation">{{ employee.position }} - SVDK Gramin Bank</p>
+    <p class="employee-id">Employee ID: {{ employee.userId }}</p>
+
+    <div class="info-section">
+      <h4>Contact Information</h4>
+      <p><strong>Email:</strong> {{ employee.email }}</p>
+      <p><strong>Phone:</strong> {{ employee.phoneNumber }}</p>
+      <p><strong>Designation:</strong> {{ employee.position }}</p>
+    </div>
+
+    <div class="info-section">
+      <h4>Bank Details</h4>
+      <p><strong>Salary:</strong> ₹ {{ employee.salary }}</p>
+      <p><strong>Joining Date:</strong> {{ employee.dateOfJoining }}</p>
+    </div>
+
+   <div class="info-section">
+  <h4>Update Password</h4>
+  <form #passwordForm="ngForm" (ngSubmit)="updatePassword(passwordForm)">
+    <label for="password">New Password:</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      ngModel
+      required
+      pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&amp;#])[A-Za-z\d@$!%*?&amp;#]{9,30}$"
+      minlength="9"
+      maxlength="30"
+      placeholder="Enter new password"
+      style="padding: 5px; width: 100%; border-radius: 6px; border: 1px solid #800000; margin-top: 5px; margin-bottom: 10px;"
+      title="Password must be 9-30 characters long, including at least one uppercase letter, one lowercase letter, one number, and one special character."
+    />
+    <div *ngIf="passwordForm.submitted && passwordForm.controls['password']?.invalid" style="color: red;">
+      <small *ngIf="passwordForm.controls['password']?.errors?.['required']">Password is required.</small>
+      <small *ngIf="passwordForm.controls['password']?.errors?.['minlength']">Minimum 9 characters required.</small>
+      <small *ngIf="passwordForm.controls['password']?.errors?.['maxlength']">Maximum 30 characters allowed.</small>
+      <small *ngIf="passwordForm.controls['password']?.errors?.['pattern']">
+        Password must include at least one uppercase letter, one lowercase letter, one digit, and one special character.
+      </small>
+    </div>
+
+    <label for="confirmPassword" style="margin-top: 10px;">Confirm Password:</label>
+    <input
+      type="password"
+      id="confirmPassword"
+      name="confirmPassword"
+      ngModel
+      required
+      placeholder="Re-enter new password"
+      style="padding: 5px; width: 100%; border-radius: 6px; border: 1px solid #800000; margin-top: 5px;"
+    />
+    <div *ngIf="passwordForm.submitted && passwordForm.controls['confirmPassword']?.invalid" style="color: red;">
+      <small *ngIf="passwordForm.controls['confirmPassword']?.errors?.['required']">Confirm password is required.</small>
+      <small *ngIf="passwordForm.value.confirmPassword !== passwordForm.value.password">
+        Passwords must match.
+      </small>
+    </div>
+
+    <button type="submit" class="edit-btn">🔒 Update Password</button>
+  </form>
+</div>
+
+    <!-- <button class="edit-btn">✏️ Edit Profile</button> -->
+  </div>
+</div>

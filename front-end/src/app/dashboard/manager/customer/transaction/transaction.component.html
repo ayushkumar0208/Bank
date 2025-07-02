@@ -1,0 +1,103 @@
+<div style="min-height: 90vh; border-radius: 12px; border: 6px solid #800000;">
+  <div *ngIf="customAlert" class="alert-box" [ngClass]="customAlert.type">
+    {{ customAlert.message }}
+  </div>
+
+  <nav class="dash-nav">
+    <button (click)="show('transactions')" [class.active]="active==='transactions'">Transactions</button>
+    <button (click)="show('history')" [class.active]="active==='history'">History</button>
+    <img src="../../../../../assets/Images/Payments/gateway.png" width="100px" alt="Loan" class="loan-btn" routerLink="/loans" />
+  </nav>
+
+  
+
+  <!-- Transactions -->
+  <section *ngIf="active==='transactions'" class="trans-section">
+    <div class="trans-card" (click)="openTx('withdraw')">
+    <img src="../../../../../assets/Images/Payments/1.png">
+    <h3>Withdraw</h3>
+  </div>
+
+  <div class="trans-card" (click)="openTx('deposit')">
+    <img src="../../../../../assets/Images/Payments/2.png">
+    <h3>Deposit</h3>
+  </div>
+
+  <div class="trans-card" (click)="openTx('transfer')">
+    <img src="../../../../../assets/Images/Payments/3.png">
+    <h3>Transfer</h3>
+  </div>
+    <form *ngIf="txMode" #txForm="ngForm" (ngSubmit)="submitTx(txForm)" id="txForm" class="tx-form">
+      <h4>{{ txMode | titlecase }}</h4>
+        <img src="assets/Images/Payments/imps.png" alt="Transaction Icon" />
+      <div *ngIf="txMode === 'withdraw' || txMode === 'deposit'">
+        <label>
+          SSN ID:
+          <input type="text" name="ssnId" [(ngModel)]="formData.ssnId" required placeholder="SSN ID"/>
+        </label>
+      </div>
+
+      <div *ngIf="txMode === 'transfer'">
+        <label>
+          From Account:
+          <input type="text" name="fromAcc" [(ngModel)]="formData.fromAcc" required placeholder="Sender's SSN ID"/>
+        </label>
+      </div>
+
+      <label>
+        Amount:
+        <input type="number" name="amount" [(ngModel)]="formData.amount" required min="1" placeholder="Amount in Rs."/>
+      </label>
+
+      <div *ngIf="txMode === 'transfer'">
+        <label>
+          To Account:
+          <input type="text" name="toAcc" [(ngModel)]="formData.toAcc" required placeholder="Receiver's SSN ID"/>
+        </label>
+      </div>
+
+      <button type="submit">Confirm</button>
+      <button type="button" (click)="txMode = null">Cancel</button>
+    </form>
+  </section>
+
+  <!-- History -->
+  <section *ngIf="active==='history'" class="history-section ">
+    <div class="delete-customer-main">
+<div class="card highlight tx-form">
+  <h3> View Customer Transactions History by SSN</h3>
+  <div class="form-grid">
+    <input #ssnToTrans (ngModel)="ssnToTrans" name="ssnToTrans" placeholder="Enter SSN to view Transactions" required />
+    <button (click)="viewTransactionsBySSN(ssnToTrans.value)" class="btn-danger">View</button>
+  </div>
+</div>
+<div *ngIf=viewDetails class="card highlight">
+  <!-- <h3>{{}}</h3> -->
+  <table>
+    <thead>
+      <tr>
+        <th>SSN ID</th>
+        <th>Amount</th>
+        <th>Transaction Type</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let transaction of paginatedHistory">
+        <td>{{ transaction.ssnId }}</td>
+        <td>₹ {{ transaction.amount  }}</td>
+        <td>{{ transaction.transactionType  }}</td>
+        <td>{{ transaction.transactionTime | date:'short' }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="pagination-controls" *ngIf="totalPages > 1">
+    <button (click)="currentPage = currentPage - 1" [disabled]="currentPage === 1">Prev</button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="currentPage = currentPage + 1" [disabled]="currentPage === totalPages">Next</button>
+  </div>
+</div>
+
+</div>
+  </section>
+</div>

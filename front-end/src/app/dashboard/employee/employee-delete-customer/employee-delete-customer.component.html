@@ -1,0 +1,34 @@
+<div class="delete-customer-main">
+    <div class="card highlight">
+  <h3>🗑️ Delete Customer by SSN</h3>
+  <div class="form-grid">
+    <input #ssnDelete (ngModel)="ssnToDelete" name="ssnDelete" placeholder="Enter SSN to Delete" required />
+    <button (click)="deleteCustomerBySSN(ssnDelete.value)" class="btn-danger">Delete</button>
+  </div>
+</div>
+<div class="card highlight">
+  <h3>👥 Current Customers</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Pan Card</th>
+        <th>Balance</th>
+        <th>SSN</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let customer of allCustomers">
+        <td>{{ customer.id }}</td>
+        <td>{{ customer.firstName }} {{customer.lastName}}</td>
+        <td>{{ customer.panCardNumber }}</td>
+        <td>₹{{ customer.accountBalance }}</td>
+        <td>{{ customer.ssnId }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+</div>

@@ -1,0 +1,132 @@
+<div class="register-container">
+  <div class="register-card" id="register-card">
+    <h2>Customer Registration</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <!-- LEFT SECTION -->
+      <div class="form-section">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" formControlName="firstName" required placeholder="Enter First Name" />
+          <div class="error-msg" *ngIf="f['firstName'].touched && f['firstName'].invalid">
+            <small *ngIf="f['firstName'].errors?.['required']">First name is required</small>
+            <small *ngIf="f['firstName'].errors?.['pattern']">Only alphabets allowed</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" formControlName="lastName" required placeholder="Enter Last Name" />
+          <div class="error-msg" *ngIf="f['lastName'].touched && f['lastName'].invalid">
+            <small *ngIf="f['lastName'].errors?.['required']">Last name is required</small>
+            <small *ngIf="f['lastName'].errors?.['pattern']">Only alphabets allowed</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" formControlName="email" required placeholder="Enter Email" />
+          <div class="error-msg" *ngIf="f['email'].touched && f['email'].invalid">
+            <small *ngIf="f['email'].errors?.['required']">Email is required</small>
+            <small *ngIf="f['email'].errors?.['pattern']">Enter a valid email address</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" formControlName="password" required placeholder="Enter Password" />
+          <div class="error-msg" *ngIf="f['password'].touched && f['password'].invalid">
+            <small *ngIf="f['password'].errors?.['required']">Password is required</small>
+            <small *ngIf="f['password'].errors?.['pattern']">Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character. It must be 8-30 characters long.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="password" formControlName="confirmPassword" required placeholder="Confirm Password" />
+          <div class="error-msg" *ngIf="f['confirmPassword'].touched && (f['confirmPassword'].invalid || registerForm.errors?.['passwordsMismatch'])">
+            <small *ngIf="f['confirmPassword'].errors?.['required']">Confirm your password</small>
+            <small *ngIf="registerForm.errors?.['passwordsMismatch']">Passwords do not match</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Address</label>
+          <textarea formControlName="address" required placeholder="Enter Address"></textarea>
+          <div class="error-msg" *ngIf="f['address'].touched && f['address'].invalid">
+            <small *ngIf="f['address'].errors?.['required']">Address is required</small>
+            <small *ngIf="f['address'].errors?.['pattern']">Invalid address</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SECTION -->
+      <div class="form-section">
+        <div class="form-group">
+          <label>Contact Number</label>
+          <input type="tel" formControlName="contactNumber" required placeholder="Enter Contact Number" />
+          <div class="error-msg" *ngIf="f['contactNumber'].touched && f['contactNumber'].invalid">
+            <small *ngIf="f['contactNumber'].errors?.['required']">Contact number is required</small>
+            <small *ngIf="f['contactNumber'].errors?.['pattern']">Invalid contact number</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>PAN Number</label>
+          <input type="text" formControlName="panNumber" required placeholder="Enter PAN Number" />
+          <div class="error-msg" *ngIf="f['panNumber'].touched && f['panNumber'].invalid">
+            <small *ngIf="f['panNumber'].errors?.['required']">PAN is required.</small>
+            <small *ngIf="f['panNumber'].errors?.['pattern']">Format: ABCDE1234F.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>AADHAAR Card Number</label>
+          <input type="text" formControlName="cardNumber" required placeholder="Enter AADHAAR Card Number" />
+          <div class="error-msg" *ngIf="f['cardNumber'].touched && f['cardNumber'].invalid">
+            <small *ngIf="f['cardNumber'].errors?.['required']">Card number is required.</small>
+            <small *ngIf="f['cardNumber'].errors?.['pattern']">Must be 12 digits.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Date of Birth</label>
+          <input type="date" formControlName="dob" required />
+          <div class="error-msg" *ngIf="f['dob'].touched && f['dob'].invalid">
+            <small *ngIf="f['dob'].errors?.['required']">Date of birth is required.</small>
+            <small *ngIf="f['dob'].errors?.['minAge']">You must be at least 18 years old.</small>
+            <small *ngIf="f['dob'].errors?.['maxAge']">Max age can be 100 years.</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Gender</label>
+          <select formControlName="gender" required>
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+          <div class="error-msg" *ngIf="f['gender'].touched && f['gender'].invalid">
+            <small *ngIf="f['gender'].errors?.['required']">Gender is required</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Marital Status</label>
+          <select formControlName="maritalStatus" required>
+            <option value="">Select Status</option>
+            <option value="single">Single</option>
+            <option value="married">Married</option>
+            <option value="divorced">Divorced</option>
+          </select>
+          <div class="error-msg" *ngIf="f['maritalStatus'].touched && f['maritalStatus'].invalid">
+            <small *ngIf="f['maritalStatus'].errors?.['required']">Marital status is required</small>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit">Register</button>
+    </form>
+  </div>
+</div>

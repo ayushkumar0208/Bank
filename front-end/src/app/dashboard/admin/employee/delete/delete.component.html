@@ -1,0 +1,10 @@
+<div class="form-container">
+  <h2>Delete Employee</h2>
+
+  <div class="search-box">
+    <input #ssnInput placeholder="Enter SSN ID to delete" />
+    <button (click)="deleteEmployeeBySSN(ssnInput.value)">Delete</button>
+  </div>
+
+  <p class="message">{{ message }}</p>
+</div>

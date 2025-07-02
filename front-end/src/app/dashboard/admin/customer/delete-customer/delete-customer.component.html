@@ -1,0 +1,13 @@
+<div class="delete-customer-main">
+    <div class="card highlight">
+  <h3>🗑️ Delete Customer by SSN</h3>
+  <div class="form-grid">
+    <input #ssnDelete (ngModel)="ssnToDelete" name="ssnDelete" placeholder="Enter SSN to Delete" required />
+    <button (click)="deleteCustomerBySSN(ssnDelete.value)" class="btn-danger">Delete</button>
+  </div>
+  <p class="message">{{ message }}</p>
+</div>
+
+
+
+</div>
